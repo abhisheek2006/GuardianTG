@@ -5,7 +5,7 @@ from pyrogram import filters as _pyro_filters
 from app.core.config import get_settings
 
 
-async def _chat_is_approved(client: object, update: object) -> bool:
+async def _chat_is_approved(_filter: object, client: object, update: object) -> bool:
     chat_type = getattr(getattr(update, "chat", None), "type", None)
     if chat_type in ("private", "bot"):
         return True
