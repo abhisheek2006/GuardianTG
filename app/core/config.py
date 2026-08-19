@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 
 from pydantic import field_validator
@@ -74,9 +75,23 @@ class Settings(BaseSettings):
     @field_validator("sudo_ids", mode="before")
     @classmethod
     def _parse_sudo_ids(cls, value: object) -> object:
+        """Accept `123`, `123,456`, `[1, 2]` or an empty value."""
         if isinstance(value, str):
-            parts = [p.strip() for p in value.split(",") if p.strip()]
-            return [int(p) for p in parts]
+            value = value.strip()
+            if not value:
+                return []
+            if value.startswith("[") and value.endswith("]"):
+                try:
+                    parsed = json.loads(value)
+                    if isinstance(parsed, list):
+                        return [int(p) for p in parsed]
+                except ValueError:
+                    pass
+            return [int(p) for p in value.split(",") if p.strip()]
+        if isinstance(value, int):
+            return [value]
+        if isinstance(value, (list, tuple, set)):
+            return [int(p) for p in value]
         return value
 
     @field_validator("bot_token")
