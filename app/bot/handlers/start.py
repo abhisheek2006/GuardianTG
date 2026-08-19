@@ -3,6 +3,7 @@ from __future__ import annotations
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from app.bot.filters import group_approved
 from app.bot.keyboards import start_keyboard
 from app.bot.utils import is_group
 
@@ -26,7 +27,7 @@ async def start_private(client: Client, message: Message) -> None:
     await message.reply_text(text, reply_markup=start_keyboard(me.username or ""))
 
 
-@Client.on_message(filters.command("start") & filters.group)
+@Client.on_message(filters.command("start") & group_approved)
 async def start_group(client: Client, message: Message) -> None:
     await message.reply_text(
         "🛡 **GuardianTG is protecting this group.**\n\n"

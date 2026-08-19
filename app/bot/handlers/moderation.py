@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from app.bot.decorators import require_chat_admin, with_rate_limit
+from app.bot.filters import group_approved
 from app.bot.utils import is_group, parse_args, split_command
 from app.database import session as db_session
 from app.database.repositories import warnings as warnings_repo
@@ -11,7 +12,7 @@ from app.services import moderation
 from app.services import runtime
 
 
-@Client.on_message(filters.command("warn") & filters.group)
+@Client.on_message(filters.command("warn") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def warn_command(client: Client, message: Message) -> None:
@@ -33,7 +34,7 @@ async def warn_command(client: Client, message: Message) -> None:
         return
 
 
-@Client.on_message(filters.command("warnings") & filters.group)
+@Client.on_message(filters.command("warnings") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def warnings_command(client: Client, message: Message) -> None:
@@ -50,7 +51,7 @@ async def warnings_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("clearwarns") & filters.group)
+@Client.on_message(filters.command("clearwarns") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def clearwarns_command(client: Client, message: Message) -> None:
@@ -66,7 +67,7 @@ async def clearwarns_command(client: Client, message: Message) -> None:
     await message.reply_text(f"✅ Cleared {removed} warning(s) for {target.mention}.")
 
 
-@Client.on_message(filters.command("mute") & filters.group)
+@Client.on_message(filters.command("mute") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def mute_command(client: Client, message: Message) -> None:
@@ -95,7 +96,7 @@ async def mute_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("unmute") & filters.group)
+@Client.on_message(filters.command("unmute") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def unmute_command(client: Client, message: Message) -> None:
@@ -111,7 +112,7 @@ async def unmute_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("ban") & filters.group)
+@Client.on_message(filters.command("ban") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def ban_command(client: Client, message: Message) -> None:
@@ -127,7 +128,7 @@ async def ban_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("unban") & filters.group)
+@Client.on_message(filters.command("unban") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def unban_command(client: Client, message: Message) -> None:
@@ -143,7 +144,7 @@ async def unban_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("kick") & filters.group)
+@Client.on_message(filters.command("kick") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def kick_command(client: Client, message: Message) -> None:
@@ -159,7 +160,7 @@ async def kick_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("purge") & filters.group)
+@Client.on_message(filters.command("purge") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def purge_command(client: Client, message: Message) -> None:

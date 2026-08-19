@@ -3,11 +3,12 @@ from __future__ import annotations
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from app.bot.filters import is_approved
 from app.bot.utils import is_group
 from app.services import permissions as perms
 
 
-@Client.on_message(filters.command("help"))
+@Client.on_message(filters.command("help") & is_approved)
 async def help_command(client: Client, message: Message) -> None:
     is_owner = await perms.is_owner(message.from_user.id) if message.from_user else False
     is_admin = False

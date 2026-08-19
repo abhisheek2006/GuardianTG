@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from app.bot.decorators import require_chat_admin, with_rate_limit
+from app.bot.filters import group_approved
 from app.bot.utils import split_command
 from app.database import session as db_session
 from app.database.repositories import chats as chat_repo
@@ -25,42 +26,42 @@ async def _toggle(client: Client, message: Message, key: str, label: str) -> Non
     )
 
 
-@Client.on_message(filters.command("antispam") & filters.group)
+@Client.on_message(filters.command("antispam") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def antispam_command(client: Client, message: Message) -> None:
     await _toggle(client, message, "antispam", "🛡 Anti-Spam")
 
 
-@Client.on_message(filters.command("antilink") & filters.group)
+@Client.on_message(filters.command("antilink") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def antilink_command(client: Client, message: Message) -> None:
     await _toggle(client, message, "antilink", "🔗 Anti-Link")
 
 
-@Client.on_message(filters.command("antiraid") & filters.group)
+@Client.on_message(filters.command("antiraid") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def antiraid_command(client: Client, message: Message) -> None:
     await _toggle(client, message, "antiraid", "💥 Anti-Raid")
 
 
-@Client.on_message(filters.command("captcha") & filters.group)
+@Client.on_message(filters.command("captcha") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def captcha_command(client: Client, message: Message) -> None:
     await _toggle(client, message, "captcha", "🧪 CAPTCHA")
 
 
-@Client.on_message(filters.command("antibot") & filters.group)
+@Client.on_message(filters.command("antibot") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def antibot_command(client: Client, message: Message) -> None:
     await _toggle(client, message, "antibot", "🤖 Anti-Bot")
 
 
-@Client.on_message(filters.command("antiflood") & filters.group)
+@Client.on_message(filters.command("antiflood") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def antiflood_command(client: Client, message: Message) -> None:
@@ -114,7 +115,7 @@ async def antiflood_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("allowdomain") & filters.group)
+@Client.on_message(filters.command("allowdomain") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def allowdomain_command(client: Client, message: Message) -> None:
@@ -132,7 +133,7 @@ async def allowdomain_command(client: Client, message: Message) -> None:
     await message.reply_text(f"✅ Allowed domain: `{domain}`")
 
 
-@Client.on_message(filters.command("blockdomain") & filters.group)
+@Client.on_message(filters.command("blockdomain") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def blockdomain_command(client: Client, message: Message) -> None:
@@ -150,7 +151,7 @@ async def blockdomain_command(client: Client, message: Message) -> None:
     await message.reply_text(f"⛔ Blocked domain: `{domain}`")
 
 
-@Client.on_message(filters.command("allowbot") & filters.group)
+@Client.on_message(filters.command("allowbot") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def allowbot_command(client: Client, message: Message) -> None:
@@ -168,7 +169,7 @@ async def allowbot_command(client: Client, message: Message) -> None:
     await message.reply_text(f"✅ Trusted bot: @{username}")
 
 
-@Client.on_message(filters.command("spammode") & filters.group)
+@Client.on_message(filters.command("spammode") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def spammode_command(client: Client, message: Message) -> None:

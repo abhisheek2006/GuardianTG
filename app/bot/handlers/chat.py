@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from app.bot.decorators import require_chat_admin, with_rate_limit
+from app.bot.filters import group_approved
 from app.bot.utils import is_group, split_command
 from app.database import session as db_session
 from app.database.repositories import chats as chat_repo
@@ -14,7 +15,7 @@ from app.services import filters as filter_service
 
 # ── Welcome / Goodbye ─────────────────────────────────────────────────
 
-@Client.on_message(filters.command("welcome") & filters.group)
+@Client.on_message(filters.command("welcome") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def welcome_command(client: Client, message: Message) -> None:
@@ -47,7 +48,7 @@ async def welcome_command(client: Client, message: Message) -> None:
     await message.reply_text("⚠️ Usage: `/welcome on` or `/welcome off`")
 
 
-@Client.on_message(filters.command("welcomemsg") & filters.group)
+@Client.on_message(filters.command("welcomemsg") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def welcomemsg_command(client: Client, message: Message) -> None:
@@ -65,7 +66,7 @@ async def welcomemsg_command(client: Client, message: Message) -> None:
     await message.reply_text(f"✅ Welcome message set:\n\n{rest}")
 
 
-@Client.on_message(filters.command("goodbye") & filters.group)
+@Client.on_message(filters.command("goodbye") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def goodbye_command(client: Client, message: Message) -> None:
@@ -88,7 +89,7 @@ async def goodbye_command(client: Client, message: Message) -> None:
     await message.reply_text("⚠️ Usage: `/goodbye on` or `/goodbye off`")
 
 
-@Client.on_message(filters.command("goodbyemsg") & filters.group)
+@Client.on_message(filters.command("goodbyemsg") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def goodbyemsg_command(client: Client, message: Message) -> None:
@@ -103,7 +104,7 @@ async def goodbyemsg_command(client: Client, message: Message) -> None:
 
 # ── Rules ─────────────────────────────────────────────────────────────
 
-@Client.on_message(filters.command("rules") & filters.group)
+@Client.on_message(filters.command("rules") & group_approved)
 @with_rate_limit()
 async def rules_command(client: Client, message: Message) -> None:
     db = db_session.get_db()
@@ -114,7 +115,7 @@ async def rules_command(client: Client, message: Message) -> None:
         await message.reply_text("📜 No rules have been set yet for this group.")
 
 
-@Client.on_message(filters.command("setrules") & filters.group)
+@Client.on_message(filters.command("setrules") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def setrules_command(client: Client, message: Message) -> None:
@@ -136,7 +137,7 @@ async def setrules_command(client: Client, message: Message) -> None:
 
 # ── Log channel ──────────────────────────────────────────────────────
 
-@Client.on_message(filters.command("setlogchannel") & filters.group)
+@Client.on_message(filters.command("setlogchannel") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def setlogchannel_command(client: Client, message: Message) -> None:
@@ -168,7 +169,7 @@ async def setlogchannel_command(client: Client, message: Message) -> None:
 
 # ── Custom filters ───────────────────────────────────────────────────
 
-@Client.on_message(filters.command("filter") & filters.group)
+@Client.on_message(filters.command("filter") & group_approved)
 @require_chat_admin
 @with_rate_limit()
 async def filter_command(client: Client, message: Message) -> None:

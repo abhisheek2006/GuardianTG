@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from app.bot.decorators import with_rate_limit
+from app.bot.filters import is_approved
 from app.bot.keyboards import settings_keyboard
 from app.bot.utils import is_group
 from app.database import session as db_session
@@ -11,7 +12,7 @@ from app.database.repositories import chats as chat_repo
 from app.services import permissions as perms
 
 
-@Client.on_message(filters.command("settings"))
+@Client.on_message(filters.command("settings") & is_approved)
 @with_rate_limit()
 async def settings_command(client: Client, message: Message) -> None:
     user_id = message.from_user.id if message.from_user else 0
