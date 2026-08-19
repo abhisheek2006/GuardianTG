@@ -3,6 +3,14 @@ from __future__ import annotations
 import asyncio
 import signal
 
+# Pyrogram 2.0.106 calls asyncio.get_event_loop() at import time, which
+# raises on Python 3.14+. Install a default event loop first so the import
+# (and therefore the whole bot) starts successfully on Python 3.14.
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
 from app.core.config import validate_settings
 from app.core.logging import get_logger, setup_logging
 from app.database import session as db_session
