@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login · GuardianTG{% endblock %}
+{% block content %}
+<form class="login-card" method="post" action="/login">
+  <div class="brand" style="margin-bottom:16px;">🛡 <span>GuardianTG</span></div>
+  {% if error %}<div class="err">{{ error }}</div>{% endif %}
+  <label for="email">Admin email</label>
+  <input type="email" id="email" name="email" placeholder="you@example.com" autofocus required>
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password" placeholder="••••••••" required>
+  <button type="submit">Sign in</button>
+</form>
+{% endblock %}

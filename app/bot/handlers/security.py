@@ -184,3 +184,48 @@ async def spammode_command(client: Client, message: Message) -> None:
     db = db_session.get_db()
     await chat_repo.update_chat_setting(db, message.chat.id, "spam_mode", rest.lower())
     await message.reply_text(f"✅ Spam mode set to **{rest.lower()}**")
+
+
+@Client.on_message(filters.command("maxwarnings") & group_approved)
+@require_chat_admin
+@with_rate_limit()
+async def maxwarnings_command(client: Client, message: Message) -> None:
+    _, rest = split_command(message)
+    if not rest:
+        await message.reply_text("⚠️ Usage: `/maxwarnings <1-10>`")
+        return
+    try:
+        limit = int(rest.split()[0])
+    except ValueError:
+        await message.reply_text("⚠️ Value must be a number.")
+        return
+    if limit < 1 or limit > 10:
+        await message.reply_text("⚠️ Value must be between 1 and 10.")
+        return
+    db = db_session.get_db()
+    await chat_repo.update_chat_setting(db, message.chat.id, "max_warnings", limit)
+    await message.reply_text(f"✅ Max warnings set to **{limit}**.")
+
+
+@Client.on_message(filters.command("mutetime") & group_approved)
+@require_chat_admin
+@with_rate_limit()
+async def mutetime_command(client: Client, message: Message) -> None:
+    _, rest = split_command(message)
+    if not rest:
+        await message.reply_text(
+            "⚠️ Usage: `/mutetime 10m` (default mute duration)\n"
+            "Examples: `30s`, `10m`, `1h`, `6h`, `1d`, `7d`"
+        )
+        return
+    from app.services import moderation as moderation_service
+
+    duration = moderation_service.parse_duration(rest.split()[0])
+    if not duration:
+        await message.reply_text("⚠️ Invalid duration.")
+        return
+    db = db_session.get_db()
+    await chat_repo.update_chat_setting(db, message.chat.id, "mute_duration", duration)
+    await message.reply_text(
+        f"✅ Default mute duration set to **{moderation_service.format_duration(duration)}**."
+    )

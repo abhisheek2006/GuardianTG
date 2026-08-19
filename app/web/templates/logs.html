@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Logs · GuardianTG{% endblock %}
+{% block content %}
+<table>
+  <thead><tr><th>Time (UTC)</th><th>Chat</th><th>Event</th><th>User</th><th>Admin</th><th>Details</th></tr></thead>
+  <tbody>
+  {% for e in entries %}
+    <tr>
+      <td>{{ e.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ e.chat_id }}</td>
+      <td><span class="badge">{{ e.event_type }}</span></td>
+      <td>{{ e.user_id or '—' }}</td>
+      <td>{{ e.admin_id or '—' }}</td>
+      <td>{{ e.details if e.details else '' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

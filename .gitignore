@@ -14,6 +14,13 @@ htmlcov/
 .env
 *.env.local
 
+# Pyrogram session files
+*.session
+*.session-journal
+
+# Vercel
+.vercel/
+
 # Logs
 logs/
 *.log

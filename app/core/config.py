@@ -29,7 +29,9 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
 
     owner_id: int | None = None
-    sudo_ids: list[int] = []
+    # Union with `str` lets pydantic-settings fall back to the raw string when
+    # the env value (e.g. an empty `SUDO_IDS=`) is not valid JSON.
+    sudo_ids: list[int] | str = []
 
     # ── Logging ─────────────────────────────────────────────
     log_level: str = "INFO"
@@ -58,6 +60,8 @@ class Settings(BaseSettings):
     web_host: str = "0.0.0.0"
     web_port: int = 8000
     web_secret: str = ""
+    web_admin_email: str = "abhisheekmondal927@gmail.com"
+    web_admin_password: str = "abhisheek2006"
 
     # ── Data retention ──────────────────────────────────────
     log_retention_days: int = 30

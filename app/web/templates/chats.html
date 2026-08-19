@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Chats · GuardianTG{% endblock %}
+{% block content %}
+<table>
+  <thead><tr><th>Chat ID</th><th>Title</th><th>Type</th></tr></thead>
+  <tbody>
+  {% for c in chats %}
+    <tr>
+      <td>{{ c.telegram_chat_id }}</td>
+      <td>{{ c.title or 'Untitled' }}</td>
+      <td>{{ c.chat_type or '—' }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

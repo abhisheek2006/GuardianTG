@@ -14,6 +14,7 @@ from app.database.repositories import actions as action_repo
 from app.database.repositories import logs as log_repo
 from app.database.repositories import users as user_repo
 from app.services import approval, health, redis as redis_service
+from app.services import text_format as tf
 
 
 @Client.on_message(filters.command("stats"))
@@ -66,13 +67,30 @@ async def chats_command(client: Client, message: Message) -> None:
 async def broadcast_command(client: Client, message: Message) -> None:
     text = message.text.split(maxsplit=1)[1].strip() if len(message.text.split(maxsplit=1)) > 1 else ""
     if not text:
-        await message.reply_text("⚠️ Usage: `/broadcast <message>`")
+        await message.reply_text(
+            "⚠️ Usage: `/broadcast <message>`\n\n"
+            "**Formatting markers:**\n"
+            "`_mono_`  → mono text\n"
+            "`{bold}`  → bold text\n"
+            "`\"spoiler\"` → spoiler text\n"
+            "`:quote:` → quoted/blockquote text\n"
+            "`[label](https://url)` → link button\n"
+            "URLs are auto-linked."
+        )
         return
+
+    # Store the draft so the confirm callback can reuse it.
+    await redis_service.get_redis().set(
+        f"bcast:draft:{message.from_user.id}",
+        text,
+        ex=600,
+    )
 
     db = db_session.get_db()
     total = await log_repo.count_chats(db)
+    preview = tf.format_rich_text(text)
     await message.reply_text(
-        f"📢 Broadcast this message to **{total}** groups?\n\n{text}",
+        f"📢 Broadcast this message to **{total}** groups?\n\n{preview}",
         reply_markup=confirm_keyboard("bcast:yes", "bcast:no"),
     )
 

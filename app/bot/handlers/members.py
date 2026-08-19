@@ -5,6 +5,7 @@ from pyrogram.types import ChatMemberUpdated, Message
 
 from app.bot.handlers.verification import start_captcha
 from app.bot.keyboards import welcome_buttons
+from app.core.config import get_settings
 from app.database import session as db_session
 from app.database.repositories import chats as chat_repo
 from app.database.repositories import users as user_repo
@@ -16,13 +17,11 @@ from app.services import redis as redis_service
 JOIN_STATUSES = {enums.ChatMemberStatus.MEMBER, enums.ChatMemberStatus.RESTRICTED}
 LEFT_STATUSES = {
     enums.ChatMemberStatus.LEFT,
-    enums.ChatMemberStatus.KICKED,
     enums.ChatMemberStatus.BANNED,
 }
 PRIOR_STATUSES = {
     None,
     enums.ChatMemberStatus.LEFT,
-    enums.ChatMemberStatus.KICKED,
     enums.ChatMemberStatus.BANNED,
 }
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GuardianTG{% endblock %}</title>
+  <style>
+    :root { --bg:#0f1117; --card:#171a23; --border:#262b3a; --text:#e6e9f0; --muted:#9aa3b5; --green:#22c55e; --red:#ef4444; --blue:#3b82f6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px; }
+    header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .brand { font-size: 22px; font-weight: 700; }
+    .brand span { color: var(--blue); }
+    nav a { color: var(--muted); text-decoration: none; margin-left: 16px; font-size: 14px; }
+    nav a:hover { color: var(--text); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .card .num { font-size: 28px; font-weight: 700; margin-top: 6px; }
+    .card .lbl { color: var(--muted); font-size: 13px; }
+    .green { color: var(--green); } .red { color: var(--red); } .blue { color: var(--blue); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; }
+    .login-card { max-width: 380px; margin: 80px auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); margin: 10px 0 16px; }
+    button { width: 100%; padding: 11px; border: 0; border-radius: 8px; background: var(--blue); color: #fff; font-weight: 600; cursor: pointer; }
+    .err { color: var(--red); font-size: 13px; margin-bottom: 10px; }
+    .badge { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: var(--border); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">🛡 <span>GuardianTG</span> Security</div>
+      <nav>
+        <a href="/dashboard">Overview</a>
+        <a href="/logs">Logs</a>
+        <a href="/chats">Chats</a>
+        <a href="/logout">Logout</a>
+      </nav>
+    </header>
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

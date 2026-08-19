@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ name }} · {{ tagline }}</title>
+  <style>
+    :root { --bg:#0b0d12; --card:#12151d; --border:#232838; --text:#e8ebf2; --muted:#8f99ad; --accent:#3b82f6; --green:#22c55e; --red:#ef4444; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
+    .brand { font-size: 20px; font-weight: 700; letter-spacing: .3px; }
+    .brand span { color: var(--accent); }
+    .btn { display: inline-block; padding: 11px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 14px; border: 1px solid transparent; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost { border-color: var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero { text-align: center; padding: 84px 0 56px; }
+    .hero h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.1; letter-spacing: -.5px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 18px auto 30px; }
+    .hero .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; padding: 40px 0 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+    .card .icon { font-size: 26px; }
+    .card h3 { margin: 10px 0 6px; font-size: 16px; }
+    .card p { color: var(--muted); font-size: 13.5px; }
+    .section-title { text-align: center; padding: 48px 0 4px; font-size: 26px; }
+    .section-sub { text-align: center; color: var(--muted); margin-bottom: 10px; }
+    .footer { text-align: center; color: var(--muted); padding: 54px 0 40px; font-size: 13px; border-top: 1px solid var(--border); margin-top: 56px; }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 44px 0 0; }
+    .stat { text-align: center; }
+    .stat .num { font-size: 30px; font-weight: 700; color: var(--accent); }
+    .stat .lbl { color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">🛡 <span>{{ name }}</span></div>
+      <nav>
+        {% if authed %}<a class="btn btn-ghost" href="/dashboard">Dashboard</a>
+        {% else %}<a class="btn btn-ghost" href="/login">Admin Login</a>{% endif %}
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Advanced Telegram<br>Group <span>Security</span> Bot</h1>
+      <p>{{ tagline }}. Auto-moderation, anti-spam, anti-raid lockdowns and CAPTCHA gates — powered by GuardianTG.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="/login">Open Dashboard</a>
+        <a class="btn btn-ghost" href="https://t.me/BotFather" target="_blank" rel="noopener">Create Your Bot</a>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat"><div class="num">24/7</div><div class="lbl">Uptime</div></div>
+      <div class="stat"><div class="num">100%</div><div class="lbl">Telegram-native</div></div>
+      <div class="stat"><div class="num">10+</div><div class="lbl">Defense layers</div></div>
+    </div>
+
+    <h2 class="section-title">Defense Layers</h2>
+    <p class="section-sub">Everything your group needs, nothing it doesn't.</p>
+    <div class="grid">
+      <div class="card"><div class="icon">🛡</div><h3>Anti-Spam</h3><p>Heuristic scoring detects spammy text, media and scam patterns before they spread.</p></div>
+      <div class="card"><div class="icon">🔗</div><h3>Anti-Link</h3><p>Allow-list / block-list domains with instant link parsing and takedowns.</p></div>
+      <div class="card"><div class="icon">💥</div><h3>Anti-Raid</h3><p>Join-rate detection triggers automatic lockdown to stop coordinated raids.</p></div>
+      <div class="card"><div class="icon">🧪</div><h3>CAPTCHA Gate</h3><p>New members must solve a CAPTCHA before they can post — bots bounce.</p></div>
+      <div class="card"><div class="icon">🤖</div><h3>Anti-Bot</h3><p>Automatically kick known bot accounts that aren't on your trust list.</p></div>
+      <div class="card"><div class="icon">🌊</div><h3>Anti-Flood</h3><p>Rate-limit messages per user with configurable warn / mute / ban actions.</p></div>
+      <div class="card"><div class="icon">⚖️</div><h3>Moderation</h3><p>Warn, mute, ban, kick, purge and full history via smart inline panels.</p></div>
+      <div class="card"><div class="icon">📊</div><h3>Live Dashboard</h3><p>Real-time stats, event logs and registered groups in a web console.</p></div>
+    </div>
+
+    <footer class="footer">
+      {{ name }} — {{ tagline }} · <a href="/dashboard">Dashboard</a> · <a href="/login">Admin login</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Overview · GuardianTG{% endblock %}
+{% block content %}
+<div class="grid">
+  <div class="card"><div class="lbl">Messages scanned</div><div class="num">{{ "{:,}".format(stats.messages_scanned) }}</div></div>
+  <div class="card"><div class="lbl">Spam blocked</div><div class="num red">{{ "{:,}".format(stats.spam_blocked) }}</div></div>
+  <div class="card"><div class="lbl">Links blocked</div><div class="num blue">{{ "{:,}".format(stats.links_blocked) }}</div></div>
+  <div class="card"><div class="lbl">Users muted</div><div class="num">{{ "{:,}".format(stats.users_muted) }}</div></div>
+  <div class="card"><div class="lbl">Users banned</div><div class="num red">{{ "{:,}".format(stats.users_banned) }}</div></div>
+  <div class="card"><div class="lbl">CAPTCHAs passed</div><div class="num green">{{ "{:,}".format(stats.captchas_passed) }}</div></div>
+  <div class="card"><div class="lbl">Raids prevented</div><div class="num blue">{{ "{:,}".format(stats.raids_prevented) }}</div></div>
+  <div class="card"><div class="lbl">Known users</div><div class="num">{{ "{:,}".format(stats.users) }}</div></div>
+  <div class="card"><div class="lbl">Registered groups</div><div class="num">{{ "{:,}".format(stats.chats) }}</div></div>
+</div>
+{% endblock %}
