@@ -24,6 +24,11 @@ class Settings(BaseSettings):
     bot_name: str = "GuardianTG"
     bot_tagline: str = "Advanced Telegram Group Security Bot"
     bot_token: str = ""
+    # Telegram API credentials. The defaults are the public test credentials
+    # that Pyrogram/Telethon use for bot-only apps; replace with your own from
+    # https://my.telegram.org if you prefer.
+    api_id: int = 6
+    api_hash: str = "eb06d4abfb49dc3eeb1aeb98ae0f581e"
 
     mongo_uri: str = ""
     mongo_database: str = "guardiantg"

@@ -9,6 +9,8 @@ def create_client() -> Client:
     settings = get_settings()
     return Client(
         "guardiantg",
+        api_id=settings.api_id,
+        api_hash=settings.api_hash,
         bot_token=settings.bot_token,
         plugins={"root": "app.bot.handlers"},
         workdir=".",
