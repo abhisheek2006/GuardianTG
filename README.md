@@ -34,11 +34,13 @@ The web dashboard (optional, `WEB_DASHBOARD_ENABLED=true`) runs on
 
 ## Deploy the web dashboard to Vercel
 
-The dashboard is ready for Vercel. `api/index.py` exposes the FastAPI app and
-`vercel.json` rewrites every route to it.
+The dashboard is ready for Vercel. Vercel auto-detects the FastAPI app via the
+`fastapi` dependency and loads it from `app.web.main:app`, which is declared in
+`pyproject.toml` under `[tool.vercel] entrypoint`. All routes are served by
+this single function.
 
 1. Push this repository to GitHub.
-2. On Vercel, **Import Project** → select the repo → framework **Python**.
+2. On Vercel, **Import Project** → select the repo → framework **Python** (auto-detected).
 3. Add environment variables in Project Settings → Environment Variables:
    - `WEB_SECRET` (any long random string, used to sign session cookies)
    - `WEB_ADMIN_EMAIL` (defaults to `abhisheekmondal927@gmail.com`)

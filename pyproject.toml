@@ -1,0 +1,28 @@
+[project]
+name = "guardiantg"
+version = "1.0.0"
+description = "Advanced Telegram Group Security Bot"
+requires-python = ">=3.12"
+dependencies = [
+    # Core
+    "pyrogram==2.0.106",
+    "pydantic==2.8.2",
+    "pydantic-settings==2.3.4",
+    "python-dotenv==1.0.1",
+    # Database (MongoDB)
+    "motor>=3.4,<4",
+    "pymongo>=4.9,<5",
+    # Redis (state / rate limiting)
+    "redis==5.0.4",
+    # Background jobs
+    "APScheduler==3.10.4",
+    # HTTP / web dashboard
+    "aiohttp>=3.11,<4",
+    "fastapi==0.111.0",
+    "uvicorn[standard]>=0.30,<1",
+    "jinja2>=3.1,<4",
+    "python-multipart>=0.0.9",
+]
+
+[tool.vercel]
+entrypoint = "app.web.main:app"
