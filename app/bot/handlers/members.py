@@ -28,7 +28,7 @@ PRIOR_STATUSES = {
 
 @Client.on_chat_member_updated(group=0)
 async def member_update(client: Client, update: ChatMemberUpdated) -> None:
-    if update.chat.type not in ("group", "supergroup"):
+    if update.chat.type not in (enums.ChatType.GROUP, enums.ChatType.SUPERGROUP):
         return
 
     db = db_session.get_db()

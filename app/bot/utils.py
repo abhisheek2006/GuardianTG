@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from pyrogram.enums import ChatType
 from pyrogram.types import Message, User
 
 from app.core.config import get_settings
@@ -22,7 +23,7 @@ def user_display(user: Optional[User]) -> str:
 
 
 def is_group(message: Message) -> bool:
-    return message.chat.type in ("group", "supergroup")
+    return message.chat.type in (ChatType.GROUP, ChatType.SUPERGROUP)
 
 
 def is_command(message: Message) -> bool:

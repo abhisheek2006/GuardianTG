@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 from pyrogram import filters as _pyro_filters
+from pyrogram.enums import ChatType
 
 from app.core.config import get_settings
 
 
 async def _chat_is_approved(_filter: object, client: object, update: object) -> bool:
     chat_type = getattr(getattr(update, "chat", None), "type", None)
-    if chat_type in ("private", "bot"):
+    if chat_type in (ChatType.PRIVATE, ChatType.BOT):
         return True
 
     user_id = getattr(getattr(update, "from_user", None), "id", 0)

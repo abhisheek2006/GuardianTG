@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pyrogram import Client, filters
+from pyrogram.enums import ChatType
 from pyrogram.types import CallbackQuery
 
 from app.bot.callbacks.utils import require_callback_admin
@@ -27,7 +28,7 @@ TOGGLE_LABELS = {
 @Client.on_callback_query(filters.regex(r"^set:"), group=0)
 async def settings_callback(client: Client, callback: CallbackQuery) -> None:
     chat = callback.message.chat
-    if chat.type in ("group", "supergroup") and not await require_callback_admin(client, callback):
+    if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP) and not await require_callback_admin(client, callback):
         return
 
     action = callback.data.split(":", 1)[1]

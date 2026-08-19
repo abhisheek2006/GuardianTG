@@ -5,6 +5,7 @@ import signal
 import sys
 
 from pyrogram import Client, filters
+from pyrogram.enums import ChatType
 from pyrogram.types import Message
 
 from app.bot.decorators import require_owner, with_rate_limit
@@ -113,12 +114,12 @@ async def restart_command(client: Client, message: Message) -> None:
 @require_owner
 @with_rate_limit()
 async def maintenance_command(client: Client, message: Message) -> None:
-    _, rest = message.text.split(maxsplit=1)
-    state = rest.strip().lower()
-    if state not in ("on", "off"):
+    parts = message.text.split(maxsplit=1)
+    rest = parts[1].strip().lower() if len(parts) > 1 else ""
+    if rest not in ("on", "off"):
         await message.reply_text("⚠️ Usage: `/maintenance on|off`")
         return
-    enabled = state == "on"
+    enabled = rest == "on"
     await redis_service.get_redis().set(
         "maintenance", "1" if enabled else "0", ex=86400 if enabled else 1
     )
@@ -135,7 +136,7 @@ async def debug_command(client: Client, message: Message) -> None:
     await message.reply_text(status.summary)
 
 
-@Client.on_message(filters.command("approve"))
+@Client.on_message(filters.command("approve") & filters.private)
 @require_owner
 @with_rate_limit()
 async def approve_command(client: Client, message: Message) -> None:
@@ -145,7 +146,7 @@ async def approve_command(client: Client, message: Message) -> None:
       /approve <chat_id> <days>
       /approve <chat_id> 30
     """
-    if message.chat.type != "private":
+    if message.chat.type != ChatType.PRIVATE:
         await message.reply_text(
             "⚠️ Run /approve in the bot's private chat with the owner account."
         )
@@ -190,7 +191,7 @@ async def approve_command(client: Client, message: Message) -> None:
     )
 
 
-@Client.on_message(filters.command("revoke"))
+@Client.on_message(filters.command("revoke") & filters.private)
 @require_owner
 @with_rate_limit()
 async def revoke_command(client: Client, message: Message) -> None:
@@ -210,7 +211,7 @@ async def revoke_command(client: Client, message: Message) -> None:
     await message.reply_text(f"⛔ Approval revoked for `{chat_id}`.")
 
 
-@Client.on_message(filters.command("approved"))
+@Client.on_message(filters.command("approved") & filters.private)
 @require_owner
 @with_rate_limit()
 async def approved_list_command(client: Client, message: Message) -> None:

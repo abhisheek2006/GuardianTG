@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pyrogram import Client, filters
+from pyrogram.enums import ChatType
 from pyrogram.types import CallbackQuery
 
 from app.bot.keyboards import back_keyboard, start_keyboard
@@ -61,7 +62,7 @@ async def nav_callback(client: Client, callback: CallbackQuery) -> None:
         return
 
     # Group-scoped actions: rules / security
-    if chat.type in ("group", "supergroup"):
+    if chat.type in (ChatType.GROUP, ChatType.SUPERGROUP):
         db = db_session.get_db()
         settings = await chat_repo.get_chat_settings(db, chat.id)
 
